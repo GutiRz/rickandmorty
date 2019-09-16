@@ -29,7 +29,6 @@ function App() {
         });
     } catch (error) {
       console.log("hay error")
-      
     }
   }, [filterName, filterStatus]);
 
