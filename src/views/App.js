@@ -102,8 +102,8 @@ function App() {
         )}
 
         <ButtonContainer>
-          {infoApi.prev && <Button onClick={prevPage}> {"<"} </Button>}
-          {infoApi.next && <Button onClick={nextPage}> {">"} </Button>}
+          {infoApi && infoApi.prev && <Button onClick={prevPage}> {"<"} </Button>}
+          {infoApi && infoApi.next && <Button onClick={nextPage}> {">"} </Button>}
         </ButtonContainer>
       </Container>
     </Main>
