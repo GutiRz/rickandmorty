@@ -2,21 +2,29 @@ import React, { useEffect, useState } from "react";
 import CharItem from "../components/CharItem";
 import Logo from "../logo.jpg";
 import TextField from "@material-ui/core/TextField";
-import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import { Button } from "@material-ui/core";
 
 import "../index.css";
 
-import { LogoImg, SearchBar, Container, Main } from "../styles/App.style";
+import {
+  LogoImg,
+  SearchBar,
+  Container,
+  Main,
+  NotFound,
+  ButtonContainer
+} from "../styles/App.style";
 
 function App() {
   const [filterName, setFilterName] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
   const [datosApi, setDatosApi] = useState([]);
-  const [isData, setIsData] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [infoApi, setInfoApi] = useState("");
 
   useEffect(() => {
-    setIsData(false);
+    setIsLoading(true);
 
     try {
       fetch(
@@ -25,12 +33,37 @@ function App() {
         .then(response => response.json())
         .then(json => {
           setDatosApi(json.results);
-          setIsData(true);
+          setInfoApi(json.info);
+          setIsLoading(false);
         });
     } catch (error) {
-      console.log("hay error")
+      console.log("hay error");
     }
   }, [filterName, filterStatus]);
+
+  const nextPage = () => {
+    setIsLoading(true);
+
+    fetch(infoApi.next)
+      .then(response => response.json())
+      .then(json => {
+        setDatosApi(json.results);
+        setInfoApi(json.info);
+        setIsLoading(false);
+      });
+  };
+
+  const prevPage = () => {
+    setIsLoading(true);
+
+    fetch(infoApi.prev)
+      .then(response => response.json())
+      .then(json => {
+        setDatosApi(json.results);
+        setInfoApi(json.info);
+        setIsLoading(false);
+      });
+  };
 
   return (
     <Main>
@@ -42,25 +75,36 @@ function App() {
           value={filterName}
           onChange={e => setFilterName(e.target.value)}
         />
-
-        <Select
-          id="status"
-          name="status"
+        &nbsp;&nbsp;&nbsp;
+        <TextField
+          select
           value={filterStatus}
           onChange={e => setFilterStatus(e.target.value)}
-          placeholder="Status"
+          label="Status"
+          style={{ width: 100 }}
         >
-          <MenuItem value="">Any</MenuItem>
+          <MenuItem value=" ">Any</MenuItem>
           <MenuItem value="alive">Alive</MenuItem>
           <MenuItem value="dead">Dead</MenuItem>
           <MenuItem value="unknown">Unknown</MenuItem>
-        </Select>
+        </TextField>
       </SearchBar>
 
       <Container>
-        {isData ? datosApi.map(char => (
-          <CharItem className="item" key={char.id} {...char} />
-        )) : <div>Loading ...</div>}
+        {isLoading ? (
+          <NotFound>Loading...</NotFound>
+        ) : datosApi ? (
+          datosApi.map(char => (
+            <CharItem className="item" key={char.id} {...char} />
+          ))
+        ) : (
+          <NotFound>Characters not found.</NotFound>
+        )}
+
+        <ButtonContainer>
+          {infoApi.prev && <Button onClick={prevPage}> {"<"} </Button>}
+          {infoApi.next && <Button onClick={nextPage}> {">"} </Button>}
+        </ButtonContainer>
       </Container>
     </Main>
   );

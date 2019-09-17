@@ -8,7 +8,12 @@ function SearchBar() {
     <form>
       <label>
         Name:
-        <input type="text" name="name" onChange={handleInputChange} value={inputs.name} />
+        <input
+          type="text"
+          name="name"
+          onChange={handleInputChange}
+          value={inputs.name}
+        />
       </label>
 
       <label>

@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import styled from "@emotion/styled";
 
 import { Link } from "react-router-dom";
 
@@ -39,15 +39,20 @@ export const CharStatus = styled("div")`
   color: white;
   font-size: 11px;
   font-weight: bold;
-  background: ${props => (props.status === "Alive" ? "#27AE60" : (props.status === "Dead" ? "#EF4848" : "#000000"))};
+  background: ${props =>
+    props.status === "Alive"
+      ? "#27AE60"
+      : props.status === "Dead"
+      ? "#EF4848"
+      : "#000000"};
 `;
 
 export const StyledLink = styled(Link)`
-    text-decoration: none;
-    color: 'black'
+  text-decoration: none;
+  color: 'black'
 
     &:focus, &:hover, &:visited, &:link, &:active {
-        text-decoration: none;
-        color: 'black'
-    }
+    text-decoration: none;
+    color: "black";
+  }
 `;

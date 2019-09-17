@@ -14,7 +14,7 @@ export const LogoImg = styled("img")`
 `;
 
 export const SearchBar = styled("form")`
-  display: block;
+  display: flex;
   margin-left: auto;
   margin-right: auto;
   width: 30%;
@@ -24,4 +24,19 @@ export const SearchBar = styled("form")`
 export const Container = styled("div")`
   display: flex;
   flex-wrap: wrap;
+`;
+
+export const NotFound = styled("div")`
+  font-size: 24px;
+  margin-top: 50px;
+  margin-bottom: 5px;
+  margin-left: auto;
+  margin-right: auto;
+`;
+
+export const ButtonContainer = styled("div")`
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
 `;

@@ -6,7 +6,6 @@ import App from "./views/App";
 import Character from "./views/Character";
 
 ReactDOM.render(
-  
   <BrowserRouter>
     <div>
       <Route exact path="/" component={App} />
